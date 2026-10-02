@@ -1,34 +1,52 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#090d12" />
-    <title>کایرو کینگدامز</title>
-  </head>
-  <body>
-    <div id="app">
-      <header class="topbar">
-        <div class="brand">کایرو <span>کینگدامز</span></div>
-        <div class="status">جهان آذر <i></i> آنلاین</div>
-      </header>
-      <main>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#090d12" />
+  <meta name="description" content="Kairo Kingdoms - دنیای استراتژیک سه‌بعدی فانتزی" />
+  <title>کایرو کینگدامز | Kairo Kingdoms</title>
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <div class="brand"><b class="brand-mark">K</b><div>کایرو <span>کینگدامز</span><small>KAIRO KINGDOMS</small></div></div>
+      <div class="status">جهان آذر <i></i> آنلاین</div>
+    </header>
+    <main class="game-layout">
+      <section class="main-column">
         <section class="scene-wrap">
-          <div class="scene-heading">
-            <p>جهان پهناور در انتظار توست</p>
-            <h1>قلمرو خود را بساز</h1>
-          </div>
+          <div class="scene-heading"><p>جهان پهناور در انتظار توست</p><h1>قلمرو خود را بساز</h1></div>
           <div id="world-scene" aria-label="نمای سه‌بعدی جهان بازی"></div>
-          <div class="scene-hint">برای چرخاندن جهان، لمس کن و بکش</div>
+          <div class="scene-hint">برای چرخاندن جهان لمس کن و بکش · برای انتخاب شهر روی آن بزن</div>
+          <div class="map-controls"><button id="reset-camera" type="button">بازنشانی دوربین ⟳</button><span>نقشه استراتژیک · نمای سه‌بعدی</span></div>
         </section>
-        <footer class="bottom-panel">
-          <div><small>طلا</small><strong>۱٬۲۰۰</strong></div>
-          <div><small>چوب</small><strong>۸۵۰</strong></div>
-          <div><small>سنگ</small><strong>۶۴۰</strong></div>
-          <div><small>غذا</small><strong>۱٬۰۰۰</strong></div>
-        </footer>
-      </main>
-    </div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+        <section class="bottom-panel" aria-label="منابع قلمرو">
+          <div><small>◈ طلا</small><strong id="gold">۱٬۲۰۰</strong></div>
+          <div><small>▰ چوب</small><strong id="wood">۸۵۰</strong></div>
+          <div><small>◆ سنگ</small><strong id="stone">۶۴۰</strong></div>
+          <div><small>✦ غذا</small><strong id="food">۱٬۰۰۰</strong></div>
+        </section>
+      </section>
+      <aside class="side-panel">
+        <div class="panel-title"><span>فرماندهی قلمرو</span><b>Ⅰ</b></div>
+        <div class="kingdom-card"><div class="crest">♜</div><div><strong>پادشاهی آذر</strong><small>فرمانروا · سطح ۱</small></div><span class="level">روز ۱</span></div>
+        <div class="selected-location"><small>موقعیت انتخاب‌شده</small><strong id="selected-place">پایتخت آذر</strong><p id="place-description">مرکز فرماندهی و قلب پادشاهی تو</p></div>
+        <div class="panel-title sub"><span>ساختمان‌های قلمرو</span><small>ارتقا و توسعه</small></div>
+        <div class="buildings">
+          <button class="building" data-building="قلعه" data-cost="gold:250,stone:180"><span>♜</span><b>قلعه</b><small>سطح <i>۱</i> · ۲۵۰ طلا</small></button>
+          <button class="building" data-building="پادگان" data-cost="wood:180,stone:100"><span>⚔</span><b>پادگان</b><small>سطح <i>۱</i> · ۱۸۰ چوب</small></button>
+          <button class="building" data-building="معدن" data-cost="wood:120,gold:100"><span>◆</span><b>معدن</b><small>سطح <i>۱</i> · ۱۲۰ چوب</small></button>
+          <button class="building" data-building="مزرعه" data-cost="wood:100,stone:60"><span>❖</span><b>مزرعه</b><small>سطح <i>۱</i> · ۱۰۰ چوب</small></button>
+        </div>
+        <button class="primary-action" id="collect-income" type="button">دریافت تولید آزمایشی منابع</button>
+        <div class="notice" id="notice" role="status" aria-live="polite">برای ارتقای ساختمان، آن را انتخاب کن. این نسخه آزمایشی است و پیشرفت هنوز روی سرور ذخیره نمی‌شود.</div>
+        <div class="panel-title sub"><span>وضعیت قلمرو</span><small>گزارش</small></div>
+        <div class="kingdom-stats"><div><span>قدرت ارتش</span><b>۱۲۰</b></div><div><span>جمعیت</span><b>۳۵۰</b></div><div><span>قلمروها</span><b>۱ / ۱۲</b></div></div>
+      </aside>
+    </main>
+    <footer class="footer"><span>نسخه توسعه‌ای ۰.۲</span><span>دنیای کایرو · ساخت در حال توسعه</span></footer>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
 </html>
