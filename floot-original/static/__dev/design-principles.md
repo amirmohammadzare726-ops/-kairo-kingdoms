@@ -1,0 +1,3 @@
+precision strategy atlas
+dark-only visual system with deep ink surfaces, restrained electric-cyan signal color, and warm sand accents for territory and economy states. Compact information density, crisp borders, subtle elevation, tabular numerals, and map-first composition. The mood is premium tactical command software rather than a generic dashboard: engineered geometry, quiet gradients, readable Persian UI, and restrained motion. The map is the visual hero; controls should feel like physical instruments layered over a strategic table.
+    3
