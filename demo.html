@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="fa" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta name="theme-color" content="#090d12"><title>کایرو کینگدامز - نسخه آزمایشی</title>
+<style>@import url("https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap");
+
+:root { font-family: "Vazirmatn", sans-serif; color: #f4ead7; background: #090d12; font-synthesis: none; }
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; min-height: 100vh; background: radial-gradient(ellipse at 50% 25%, #1b2931 0, #0b1118 48%, #070a0e 100%); }
+#app { min-height: 100vh; display: flex; flex-direction: column; }
+.topbar { height: 66px; padding: 0 22px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #8b713d55; background: #080d12cc; }
+.brand { font-weight: 800; letter-spacing: -.5px; color: #e5bd70; font-size: 20px; }
+.brand span { color: #eee5d3; }
+.status { color: #aab8b5; font-size: 12px; }
+.status i { display: inline-block; width: 7px; height: 7px; margin: 0 7px; border-radius: 50%; background: #65c98a; box-shadow: 0 0 10px #65c98a; }
+main { width: min(100%, 1100px); margin: 0 auto; padding: 24px 18px 20px; flex: 1; display: flex; flex-direction: column; }
+.scene-wrap { position: relative; flex: 1; min-height: 440px; overflow: hidden; border: 1px solid #a8874b66; border-radius: 18px; background: linear-gradient(180deg, #18252d, #0b1218); box-shadow: 0 20px 70px #0008, inset 0 0 45px #c69b4010; }
+#world-scene { position: absolute; inset: 0; touch-action: none; }
+#world-scene canvas { display: block; width: 100%; height: 100%; }
+.scene-heading { position: absolute; z-index: 1; top: 20px; right: 22px; pointer-events: none; text-shadow: 0 2px 12px #000; }
+.scene-heading p { margin: 0 0 5px; color: #d4b77c; font-size: 12px; }
+.scene-heading h1 { margin: 0; font-size: clamp(20px, 4vw, 30px); }
+.scene-hint { position: absolute; z-index: 1; bottom: 14px; left: 16px; color: #c2c9c5; font-size: 11px; pointer-events: none; }
+.bottom-panel { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 14px; }
+.bottom-panel div { display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; border: 1px solid #9a7a414d; border-radius: 12px; background: #121a20; }
+.bottom-panel small { color: #aeb9b5; font-size: 11px; }
+.bottom-panel strong { color: #e7c47f; font-size: 17px; }
+@media (max-width: 560px) { .topbar { height: 56px; padding: 0 14px; } main { padding: 14px 10px; } .scene-wrap { min-height: 58vh; } .bottom-panel { gap: 6px; } .bottom-panel div { padding: 9px 8px; } .bottom-panel strong { font-size: 14px; } }
+
+
+/* Kingdom management interface */
+.game-layout{width:min(100%,1280px);margin:0 auto;padding:22px 18px 16px;display:grid;grid-template-columns:minmax(0,1.7fr) minmax(280px,.75fr);gap:16px;flex:1}
+.main-column{min-width:0;display:flex;flex-direction:column}
+.scene-wrap{min-height:510px;flex:1}
+.scene-hint{right:18px;left:auto;bottom:15px}
+.map-controls{position:absolute;left:14px;top:14px;z-index:2;display:flex;align-items:center;gap:9px;color:#aab7b4;font-size:9px}
+.map-controls button{border:1px solid #8c744c88;border-radius:7px;background:#111c22dd;color:#e3c58f;padding:7px 9px;font:inherit;cursor:pointer}
+.bottom-panel{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:12px}
+.bottom-panel div{display:flex;flex-direction:column;gap:4px;padding:11px 13px;border:1px solid #9a7a414d;border-radius:11px;background:#121a20}
+.bottom-panel small{color:#aeb9b5;font-size:11px}.bottom-panel strong{color:#e7c47f;font-size:16px}
+.side-panel{align-self:stretch;padding:17px;border:1px solid #35434b;border-radius:15px;background:linear-gradient(145deg,#1a252d,#121a21);box-shadow:0 16px 45px #0005}
+.panel-title{display:flex;justify-content:space-between;align-items:center;color:#e6d6b9;font-size:13px;padding-bottom:11px;border-bottom:1px solid #35434b}
+.panel-title>b{color:#c49b5d}.kingdom-card{display:flex;align-items:center;gap:10px;padding:14px 0}
+.crest{width:38px;height:38px;display:grid;place-items:center;background:#493c2a;color:#e6bd78;border:1px solid #8b6b3c;border-radius:9px;font-size:22px}
+.kingdom-card strong,.kingdom-card small{display:block}.kingdom-card strong{font-size:13px}.kingdom-card small{font-size:10px;color:#9da6a8;margin-top:4px}
+.level{margin-right:auto;color:#e5bd78;border:1px solid #705b3b;border-radius:12px;padding:4px 8px;font-size:10px}
+.selected-location{padding:10px 12px;background:#202d35;border:1px solid #34434b;border-radius:9px}
+.selected-location small,.selected-location strong{display:block}.selected-location small{color:#c6a36c;font-size:9px}.selected-location strong{font-size:13px;margin-top:5px}.selected-location p{margin:4px 0 0;color:#9eaaa9;font-size:9px}
+.sub{margin-top:17px}.sub small{color:#a89a80;font-size:9px}
+.buildings{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:11px}
+.building{border:1px solid #3a484e;background:#202b32;color:#e9e2d5;border-radius:9px;padding:10px;text-align:right;cursor:pointer;transition:.2s}
+.building:hover{border-color:#c39a5d;background:#29363c}.building span{display:block;color:#d4ae70;font-size:19px;margin-bottom:5px}
+.building b,.building small{display:block}.building b{font-size:11px}.building small{font-size:9px;color:#9ba6a7;margin-top:3px;font-style:normal}.building i{font-style:normal;color:#e4c184}
+.primary-action{width:100%;margin-top:11px;padding:10px;border:1px solid #9c7843;border-radius:8px;background:linear-gradient(120deg,#806038,#a17b43);color:#fff1d8;font:600 10px inherit;cursor:pointer}
+.notice{margin-top:10px;padding:10px;border-right:2px solid #c29a5b;background:#202a30;color:#aeb8b7;font-size:9px;line-height:1.9;min-height:52px}
+.kingdom-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}.kingdom-stats div{background:#202d35;border-radius:7px;padding:8px 5px;text-align:center}
+.kingdom-stats span,.kingdom-stats b{display:block}.kingdom-stats span{font-size:8px;color:#9eaaa9}.kingdom-stats b{font-size:12px;color:#e5c78f;margin-top:4px}
+.footer{width:min(100%,1280px);margin:0 auto;display:flex;justify-content:space-between;color:#68767c;font-size:10px;padding:0 20px 14px}
+@media(max-width:850px){.game-layout{grid-template-columns:1fr;padding:12px}.scene-wrap{min-height:430px}.side-panel{display:block}.footer{padding:0 14px 12px}}
+@media(max-width:560px){.scene-wrap{min-height:390px}.map-controls span{display:none}.bottom-panel{gap:6px}.bottom-panel div{padding:9px 7px}.bottom-panel strong{font-size:13px}.side-panel{padding:13px}.footer{font-size:9px}}
+</style><style>
+#app{min-height:100vh}.game-layout{min-height:calc(100vh - 100px)}.footer{padding-bottom:12px}
+</style>
+<script type="importmap">{"imports":{"three":"https://esm.sh/three@0.180.0"}}</script>
+</head><body>
+<div id="app">
+<header class="topbar"><div class="brand"><b class="brand-mark">K</b><div>کایرو <span>کینگدامز</span><small>KAIRO KINGDOMS</small></div></div><div class="status">جهان آذر <i></i> آنلاین</div></header>
+<main class="game-layout"><section class="main-column"><section class="scene-wrap">
+<div class="scene-heading"><p>جهان پهناور در انتظار توست</p><h1>قلمرو خود را بساز</h1></div><div id="world-scene" aria-label="نمای سه‌بعدی جهان بازی"></div>
+<div class="scene-hint">برای چرخاندن جهان لمس کن و بکش · برای انتخاب شهر روی آن بزن</div><div class="map-controls"><button id="reset-camera" type="button">بازنشانی دوربین ⟳</button><span>نقشه استراتژیک · نمای سه‌بعدی</span></div></section>
+<section class="bottom-panel"><div><small>◈ طلا</small><strong id="gold">۱٬۲۰۰</strong></div><div><small>▰ چوب</small><strong id="wood">۸۵۰</strong></div><div><small>◆ سنگ</small><strong id="stone">۶۴۰</strong></div><div><small>✦ غذا</small><strong id="food">۱٬۰۰۰</strong></div></section></section>
+<aside class="side-panel"><div class="panel-title"><span>فرماندهی قلمرو</span><b>Ⅰ</b></div>
+<div class="kingdom-card"><div class="crest">♜</div><div><strong>پادشاهی آذر</strong><small>فرمانروا · سطح ۱</small></div><span class="level">روز ۱</span></div>
+<div class="selected-location"><small>موقعیت انتخاب‌شده</small><strong id="selected-place">پایتخت آذر</strong><p id="place-description">مرکز فرماندهی و قلب پادشاهی تو</p></div>
+<div class="panel-title sub"><span>ساختمان‌های قلمرو</span><small>ارتقا و توسعه</small></div>
+<div class="buildings"><button class="building" data-building="قلعه" data-cost="gold:250,stone:180"><span>♜</span><b>قلعه</b><small>سطح <i>۱</i> · ۲۵۰ طلا</small></button><button class="building" data-building="پادگان" data-cost="wood:180,stone:100"><span>⚔</span><b>پادگان</b><small>سطح <i>۱</i> · ۱۸۰ چوب</small></button><button class="building" data-building="معدن" data-cost="wood:120,gold:100"><span>◆</span><b>معدن</b><small>سطح <i>۱</i> · ۱۲۰ چوب</small></button><button class="building" data-building="مزرعه" data-cost="wood:100,stone:60"><span>❖</span><b>مزرعه</b><small>سطح <i>۱</i> · ۱۰۰ چوب</small></button></div>
+<button class="primary-action" id="collect-income" type="button">دریافت تولید آزمایشی منابع</button>
+<div class="notice" id="notice" role="status" aria-live="polite">برای ارتقای ساختمان، آن را انتخاب کن. این نسخه آزمایشی است و پیشرفت هنوز روی سرور ذخیره نمی‌شود.</div>
+<div class="panel-title sub"><span>وضعیت قلمرو</span><small>گزارش</small></div><div class="kingdom-stats"><div><span>قدرت ارتش</span><b>۱۲۰</b></div><div><span>جمعیت</span><b>۳۵۰</b></div><div><span>قلمروها</span><b>۱ / ۱۲</b></div></div></aside></main>
+<footer class="footer"><span>نسخه توسعه‌ای ۰.۲</span><span>دنیای کایرو · ساخت در حال توسعه</span></footer></div>
+<script type="module">
+const mount = document.querySelector("#world-scene");
+const scene = new THREE.Scene();
+scene.background = new THREE.Color("#0b151d");
+scene.fog = new THREE.Fog("#0b151d", 18, 42);
+
+const camera = new THREE.PerspectiveCamera(39, 1, 0.1, 100);
+camera.position.set(0, 11, 19);
+camera.lookAt(0, 0, 0);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+mount.appendChild(renderer.domElement);
+
+scene.add(new THREE.HemisphereLight(0xc5dce7, 0x293023, 2.1));
+const sun = new THREE.DirectionalLight(0xffd7a0, 3.4);
+sun.position.set(-8, 15, 8);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+scene.add(sun);
+
+const water = new THREE.Mesh(
+  new THREE.PlaneGeometry(100, 100),
+  new THREE.MeshStandardMaterial({ color: "#123344", roughness: 0.32, metalness: 0.2 })
+);
+water.rotation.x = -Math.PI / 2;
+water.position.y = -0.52;
+water.receiveShadow = true;
+scene.add(water);
+
+const world = new THREE.Group();
+scene.add(world);
+const landMaterial = new THREE.MeshStandardMaterial({ color: "#596b4b", roughness: 0.96, flatShading: true });
+const shoreMaterial = new THREE.MeshStandardMaterial({ color: "#a18a60", roughness: 1, flatShading: true });
+const rockMaterial = new THREE.MeshStandardMaterial({ color: "#59636a", roughness: 1, flatShading: true });
+const treeMaterial = new THREE.MeshStandardMaterial({ color: "#315b42", roughness: 1 });
+const trunkMaterial = new THREE.MeshStandardMaterial({ color: "#68482d", roughness: 1 });
+
+function createLand(x, z, sx, sz, seed = 0) {
+  const geometry = new THREE.IcosahedronGeometry(1, 4);
+  const positions = geometry.attributes.position;
+  for (let i = 0; i < positions.count; i++) {
+    const v = new THREE.Vector3().fromBufferAttribute(positions, i);
+    const n = 1 + 0.075 * Math.sin(v.x * 8 + seed) * Math.cos(v.z * 7 - seed) + 0.035 * Math.sin(v.y * 13 + seed);
+    v.multiplyScalar(n);
+    positions.setXYZ(i, v.x, v.y, v.z);
+  }
+  geometry.computeVertexNormals();
+  const land = new THREE.Mesh(geometry, landMaterial);
+  land.scale.set(sx, 0.78, sz);
+  land.position.set(x, -0.02, z);
+  land.castShadow = true;
+  land.receiveShadow = true;
+  world.add(land);
+
+  const shore = new THREE.Mesh(new THREE.CylinderGeometry(0.93, 1, 0.28, 16), shoreMaterial);
+  shore.scale.set(sx, 1, sz);
+  shore.position.set(x, -0.29, z);
+  shore.castShadow = true;
+  world.add(shore);
+}
+createLand(0, 0, 6.2, 4.8, 2);
+createLand(-7.2, -4.7, 1.9, 1.45, 5);
+createLand(7.4, 4.7, 2.0, 1.5, 8);
+createLand(7.1, -5.7, 1.15, 0.9, 11);
+
+function addMountain(x, z, height, radius = 0.8) {
+  const mountain = new THREE.Mesh(new THREE.ConeGeometry(radius, height, 6), rockMaterial);
+  mountain.position.set(x, height / 2 - 0.04, z);
+  mountain.rotation.y = 0.35;
+  mountain.castShadow = true;
+  mountain.receiveShadow = true;
+  world.add(mountain);
+}
+[[-2.4,-1.1,2.5,0.95],[0.2,-2,3.3,1.05],[2.4,0.2,2.3,0.9],[-3.1,1.3,1.7,0.75],[0.1,1.7,1.9,0.7]].forEach(v => addMountain(...v));
+
+function addTree(x, z, scale = 1) {
+  const tree = new THREE.Group();
+  const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.11, 0.55 * scale, 7), trunkMaterial);
+  trunk.position.y = 0.27 * scale;
+  trunk.castShadow = true;
+  const crown = new THREE.Mesh(new THREE.ConeGeometry(0.42 * scale, 1.0 * scale, 7), treeMaterial);
+  crown.position.y = 0.9 * scale;
+  crown.castShadow = true;
+  tree.add(trunk, crown);
+  tree.position.set(x, 0.03, z);
+  world.add(tree);
+}
+[[-4,-2.7,0.9],[-4.4,0.3,0.8],[4,-2.8,1],[3.8,2.5,0.85],[-1.2,3.1,0.7],[-8,-4.8,0.8],[7.7,4.8,0.9],[7,-5.7,0.7]].forEach(v => addTree(...v));
+
+function addSettlement(x, z, color, size, label) {
+  const group = new THREE.Group();
+  const base = new THREE.Mesh(new THREE.CylinderGeometry(size * 0.8, size, 0.16, 8), shoreMaterial);
+  base.position.y = 0.06;
+  const tower = new THREE.Mesh(new THREE.BoxGeometry(size * 0.75, size * 1.8, size * 0.75), new THREE.MeshStandardMaterial({ color: "#b9a078", roughness: 0.8 }));
+  tower.position.y = size * 0.95;
+  tower.castShadow = true;
+  const roof = new THREE.Mesh(new THREE.ConeGeometry(size * 0.65, size * 0.75, 4), new THREE.MeshStandardMaterial({ color, emissive: color, emissiveIntensity: 0.16 }));
+  roof.position.y = size * 2.2;
+  roof.rotation.y = Math.PI / 4;
+  group.add(base, tower, roof);
+  group.position.set(x, 0.08, z);
+  group.userData.label = label;
+  world.add(group);
+  return group;
+}
+
+const settlements = [
+  addSettlement(0, 0, "#e5ad55", 0.68, "پایتخت آذر"),
+  addSettlement(-3.7, -1.4, "#69c9d3", 0.43, "شهر بندری"),
+  addSettlement(3.4, 1.2, "#69c9d3", 0.42, "شهر کوهستان"),
+  addSettlement(-1.5, 2.7, "#8fbd76", 0.34, "روستای سبز"),
+  addSettlement(-7.2, -4.7, "#69c9d3", 0.34, "جزیره غربی"),
+  addSettlement(7.4, 4.7, "#69c9d3", 0.34, "جزیره شرقی")
+];
+
+const raycaster = new THREE.Raycaster();
+const pointer = new THREE.Vector2();
+let downX = 0, downY = 0, moved = false;
+renderer.domElement.addEventListener("pointerdown", e => { downX = e.clientX; downY = e.clientY; moved = false; });
+renderer.domElement.addEventListener("pointermove", e => { if (Math.hypot(e.clientX - downX, e.clientY - downY) > 5) moved = true; });
+renderer.domElement.addEventListener("pointerup", e => {
+  if (moved) return;
+  const rect = renderer.domElement.getBoundingClientRect();
+  pointer.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+  pointer.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+  raycaster.setFromCamera(pointer, camera);
+  const hits = raycaster.intersectObjects(settlements, true);
+  if (!hits.length) return;
+  let selected = hits[0].object;
+  while (selected.parent && !selected.userData.label) selected = selected.parent;
+  const hint = document.querySelector(".scene-hint");
+  if (hint) hint.textContent = selected.userData.label || "موقعیت انتخاب شد";
+});
+
+let dragging = false, lastX = 0, lastY = 0;
+let targetRotationY = -0.25, targetRotationX = 0.18;
+renderer.domElement.addEventListener("pointerdown", e => {
+  dragging = true; lastX = e.clientX; lastY = e.clientY;
+  renderer.domElement.setPointerCapture(e.pointerId);
+});
+renderer.domElement.addEventListener("pointermove", e => {
+  if (!dragging) return;
+  targetRotationY += (e.clientX - lastX) * 0.006;
+  targetRotationX = THREE.MathUtils.clamp(targetRotationX + (e.clientY - lastY) * 0.003, -0.12, 0.65);
+  lastX = e.clientX; lastY = e.clientY;
+});
+renderer.domElement.addEventListener("pointerup", () => { dragging = false; });
+renderer.domElement.addEventListener("pointercancel", () => { dragging = false; });
+
+function resize() {
+  const width = mount.clientWidth, height = mount.clientHeight;
+  if (!width || !height) return;
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+  renderer.setSize(width, height, false);
+}
+new ResizeObserver(resize).observe(mount);
+resize();
+
+function animate(time) {
+  requestAnimationFrame(animate);
+  world.rotation.y += (targetRotationY - world.rotation.y) * 0.035;
+  world.rotation.x += (targetRotationX - world.rotation.x) * 0.035;
+  settlements.forEach((s, i) => { s.children[2].position.y = s.children[2].position.y + Math.sin(time * 0.0015 + i) * 0.0008; });
+  renderer.render(scene, camera);
+}
+animate(0);
+
+
+const resources = { gold: 1200, wood: 850, stone: 640, food: 1000 };
+const buildingLevels = { قلعه: 1, پادگان: 1, معدن: 1, مزرعه: 1 };
+const resourceLabels = { gold: "طلا", wood: "چوب", stone: "سنگ", food: "غذا" };
+const formatNumber = value => new Intl.NumberFormat("fa-IR").format(value);
+function renderResources() {
+  for (const [key, value] of Object.entries(resources)) {
+    const node = document.querySelector("#" + key);
+    if (node) node.textContent = formatNumber(value);
+  }
+}
+document.querySelectorAll(".building").forEach(button => {
+  button.addEventListener("click", () => {
+    const name = button.dataset.building;
+    const costs = Object.fromEntries(button.dataset.cost.split(",").map(pair => pair.split(":").map((v, i) => i ? Number(v) : v)));
+    const missing = Object.entries(costs).filter(([key, value]) => resources[key] < value);
+    const notice = document.querySelector("#notice");
+    if (missing.length) {
+      notice.textContent = "منابع کافی نیست؛ برای ارتقای " + name + " به " + Object.entries(costs).map(([key, value]) => resourceLabels[key] + " " + formatNumber(value)).join(" و ") + " نیاز داری.";
+      return;
+    }
+    for (const [key, value] of Object.entries(costs)) resources[key] -= value;
+    buildingLevels[name] += 1;
+    button.querySelector("small").innerHTML = "سطح <i>" + formatNumber(buildingLevels[name]) + "</i> · ارتقا انجام شد";
+    notice.textContent = name + " با موفقیت به سطح " + formatNumber(buildingLevels[name]) + " ارتقا یافت. (ذخیره‌سازی آنلاین هنوز فعال نیست.)";
+    renderResources();
+  });
+});
+document.querySelector("#collect-income")?.addEventListener("click", () => {
+  resources.gold += 80; resources.wood += 55; resources.stone += 35; resources.food += 90;
+  renderResources();
+  document.querySelector("#notice").textContent = "تولید آزمایشی دریافت شد: ۸۰ طلا، ۵۵ چوب، ۳۵ سنگ و ۹۰ غذا. این مقدار فقط در همین نشست نگهداری می‌شود.";
+});
+document.querySelector("#reset-camera")?.addEventListener("click", () => {
+  targetRotationX = 0.18;
+  targetRotationY = -0.25;
+  document.querySelector(".scene-hint").textContent = "زاویه دید نقشه بازنشانی شد.";
+});
+renderResources();
+
+</script></body></html>
