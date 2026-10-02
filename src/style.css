@@ -1,0 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap");
+
+:root { font-family: "Vazirmatn", sans-serif; color: #f4ead7; background: #090d12; font-synthesis: none; }
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; min-height: 100vh; background: radial-gradient(ellipse at 50% 25%, #1b2931 0, #0b1118 48%, #070a0e 100%); }
+#app { min-height: 100vh; display: flex; flex-direction: column; }
+.topbar { height: 66px; padding: 0 22px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #8b713d55; background: #080d12cc; }
+.brand { font-weight: 800; letter-spacing: -.5px; color: #e5bd70; font-size: 20px; }
+.brand span { color: #eee5d3; }
+.status { color: #aab8b5; font-size: 12px; }
+.status i { display: inline-block; width: 7px; height: 7px; margin: 0 7px; border-radius: 50%; background: #65c98a; box-shadow: 0 0 10px #65c98a; }
+main { width: min(100%, 1100px); margin: 0 auto; padding: 24px 18px 20px; flex: 1; display: flex; flex-direction: column; }
+.scene-wrap { position: relative; flex: 1; min-height: 440px; overflow: hidden; border: 1px solid #a8874b66; border-radius: 18px; background: linear-gradient(180deg, #18252d, #0b1218); box-shadow: 0 20px 70px #0008, inset 0 0 45px #c69b4010; }
+#world-scene { position: absolute; inset: 0; touch-action: pan-y; }
+#world-scene canvas { display: block; width: 100%; height: 100%; }
+.scene-heading { position: absolute; z-index: 1; top: 20px; right: 22px; pointer-events: none; text-shadow: 0 2px 12px #000; }
+.scene-heading p { margin: 0 0 5px; color: #d4b77c; font-size: 12px; }
+.scene-heading h1 { margin: 0; font-size: clamp(20px, 4vw, 30px); }
+.scene-hint { position: absolute; z-index: 1; bottom: 14px; left: 16px; color: #c2c9c5; font-size: 11px; pointer-events: none; }
+.bottom-panel { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 14px; }
+.bottom-panel div { display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; border: 1px solid #9a7a414d; border-radius: 12px; background: #121a20; }
+.bottom-panel small { color: #aeb9b5; font-size: 11px; }
+.bottom-panel strong { color: #e7c47f; font-size: 17px; }
+@media (max-width: 560px) { .topbar { height: 56px; padding: 0 14px; } main { padding: 14px 10px; } .scene-wrap { min-height: 58vh; } .bottom-panel { gap: 6px; } .bottom-panel div { padding: 9px 8px; } .bottom-panel strong { font-size: 14px; } }
