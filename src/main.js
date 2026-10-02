@@ -171,3 +171,43 @@ function animate(time) {
   renderer.render(scene, camera);
 }
 animate(0);
+
+
+const resources = { gold: 1200, wood: 850, stone: 640, food: 1000 };
+const buildingLevels = { قلعه: 1, پادگان: 1, معدن: 1, مزرعه: 1 };
+const resourceLabels = { gold: "طلا", wood: "چوب", stone: "سنگ", food: "غذا" };
+const formatNumber = value => new Intl.NumberFormat("fa-IR").format(value);
+function renderResources() {
+  for (const [key, value] of Object.entries(resources)) {
+    const node = document.querySelector("#" + key);
+    if (node) node.textContent = formatNumber(value);
+  }
+}
+document.querySelectorAll(".building").forEach(button => {
+  button.addEventListener("click", () => {
+    const name = button.dataset.building;
+    const costs = Object.fromEntries(button.dataset.cost.split(",").map(pair => pair.split(":").map((v, i) => i ? Number(v) : v)));
+    const missing = Object.entries(costs).filter(([key, value]) => resources[key] < value);
+    const notice = document.querySelector("#notice");
+    if (missing.length) {
+      notice.textContent = "منابع کافی نیست؛ برای ارتقای " + name + " به " + Object.entries(costs).map(([key, value]) => resourceLabels[key] + " " + formatNumber(value)).join(" و ") + " نیاز داری.";
+      return;
+    }
+    for (const [key, value] of Object.entries(costs)) resources[key] -= value;
+    buildingLevels[name] += 1;
+    button.querySelector("small").innerHTML = "سطح <i>" + formatNumber(buildingLevels[name]) + "</i> · ارتقا انجام شد";
+    notice.textContent = name + " با موفقیت به سطح " + formatNumber(buildingLevels[name]) + " ارتقا یافت. (ذخیره‌سازی آنلاین هنوز فعال نیست.)";
+    renderResources();
+  });
+});
+document.querySelector("#collect-income")?.addEventListener("click", () => {
+  resources.gold += 80; resources.wood += 55; resources.stone += 35; resources.food += 90;
+  renderResources();
+  document.querySelector("#notice").textContent = "تولید آزمایشی دریافت شد: ۸۰ طلا، ۵۵ چوب، ۳۵ سنگ و ۹۰ غذا. این مقدار فقط در همین نشست نگهداری می‌شود.";
+});
+document.querySelector("#reset-camera")?.addEventListener("click", () => {
+  targetRotationX = 0.18;
+  targetRotationY = -0.25;
+  document.querySelector(".scene-hint").textContent = "زاویه دید نقشه بازنشانی شد.";
+});
+renderResources();
