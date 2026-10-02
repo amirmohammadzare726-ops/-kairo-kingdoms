@@ -11,7 +11,7 @@ body { margin: 0; min-width: 320px; min-height: 100vh; background: radial-gradie
 .status i { display: inline-block; width: 7px; height: 7px; margin: 0 7px; border-radius: 50%; background: #65c98a; box-shadow: 0 0 10px #65c98a; }
 main { width: min(100%, 1100px); margin: 0 auto; padding: 24px 18px 20px; flex: 1; display: flex; flex-direction: column; }
 .scene-wrap { position: relative; flex: 1; min-height: 440px; overflow: hidden; border: 1px solid #a8874b66; border-radius: 18px; background: linear-gradient(180deg, #18252d, #0b1218); box-shadow: 0 20px 70px #0008, inset 0 0 45px #c69b4010; }
-#world-scene { position: absolute; inset: 0; touch-action: pan-y; }
+#world-scene { position: absolute; inset: 0; touch-action: none; }
 #world-scene canvas { display: block; width: 100%; height: 100%; }
 .scene-heading { position: absolute; z-index: 1; top: 20px; right: 22px; pointer-events: none; text-shadow: 0 2px 12px #000; }
 .scene-heading p { margin: 0 0 5px; color: #d4b77c; font-size: 12px; }
