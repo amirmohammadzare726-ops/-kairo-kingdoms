@@ -136,6 +136,10 @@ renderer.domElement.addEventListener("pointerup", e => {
   while (selected.parent && !selected.userData.label) selected = selected.parent;
   const hint = document.querySelector(".scene-hint");
   if (hint) hint.textContent = selected.userData.label || "موقعیت انتخاب شد";
+  const place = document.querySelector("#selected-place");
+  if (place) place.textContent = selected.userData.label || "موقعیت انتخاب شد";
+  const desc = document.querySelector("#place-description");
+  if (desc) desc.textContent = selected.userData.label === "پایتخت آذر" ? "مرکز فرماندهی و قلب پادشاهی تو" : "منطقه‌ای از قلمرو آذر؛ برای توسعه و گسترش آماده است.";
 });
 
 let dragging = false, lastX = 0, lastY = 0;
@@ -211,3 +215,23 @@ document.querySelector("#reset-camera")?.addEventListener("click", () => {
   document.querySelector(".scene-hint").textContent = "زاویه دید نقشه بازنشانی شد.";
 });
 renderResources();
+
+renderer.domElement.addEventListener("wheel", event => {
+  event.preventDefault();
+  camera.position.z = THREE.MathUtils.clamp(camera.position.z + Math.sign(event.deltaY) * 1.2, 10, 29);
+}, { passive: false });
+document.querySelector("#zoom-in")?.addEventListener("click", () => {
+  camera.position.z = Math.max(10, camera.position.z - 1.8);
+});
+document.querySelector("#zoom-out")?.addEventListener("click", () => {
+  camera.position.z = Math.min(29, camera.position.z + 1.8);
+});
+document.querySelectorAll(".right-dock button").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".right-dock button").forEach(item => item.classList.remove("dock-active"));
+    button.classList.add("dock-active");
+    const labels = { kingdom: "قلمرو", army: "ارتش", heroes: "قهرمان", alliance: "اتحاد" };
+    const notice = document.querySelector("#notice");
+    if (notice) notice.textContent = "بخش " + (labels[button.dataset.tab] || "قلمرو") + " انتخاب شد؛ این بخش در نسخه‌های بعدی تکمیل می‌شود.";
+  });
+});
