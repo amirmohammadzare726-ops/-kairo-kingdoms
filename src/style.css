@@ -104,3 +104,21 @@ body{background:#071018}
  .map-tip{bottom:218px;font-size:8px;padding:6px 9px}
 }
 @media(max-height:650px){.location-card{padding:7px 9px}.location-card>p{margin-bottom:5px}.loc-actions .building{padding:5px}.collect-btn{padding:6px}.notice{display:none}.map-tip{bottom:190px}}
+
+
+/* Hard reset legacy dashboard layout for the immersive game scene */
+html,body,#app{width:100%;height:100%;min-height:0;margin:0;overflow:hidden}
+body{min-width:320px}
+#app.game-app{display:flex;flex-direction:column;width:100%;height:100dvh;min-height:0;overflow:hidden}
+main.battlefield{display:block;position:relative;width:100%;max-width:none;height:auto;min-height:0;flex:1;margin:0;padding:0;overflow:hidden}
+.battlefield #world-scene{position:absolute;inset:0;width:100%;height:100%}
+.battlefield .map-title{position:absolute}
+.battlefield .resource-bar{position:absolute}
+.battlefield .location-card{position:absolute}
+.battlefield .right-dock,.battlefield .left-tools{position:absolute}
+.battlefield .mini-status{position:absolute}
+.battlefield .map-tip{position:absolute}
+@media(max-width:600px){
+ #app.game-app{height:100dvh;min-height:0}
+ main.battlefield{width:100%;padding:0;margin:0;min-height:0}
+}
